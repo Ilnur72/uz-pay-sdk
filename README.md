@@ -1,23 +1,215 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# UZ Pay SDK - Универсал to'lov API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Ўзбекистондаги барча банклар учун биргина API орқали to'lov қилиш имкониятини беради.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+## Қўллаб-қувватланувчи провайдерлар
+
+- **Payme** - Payme to'lov тизими
+- **Click** - Click to'lov тизими  
+- **UzCard** - UzCard to'lov тизими
+- **Humo** - Humo to'lov тизими
+- **Apelsin** - Apelsin (IPAKYULI) to'lov тизими
+
+## Ўрнатиш
+
+```bash
+npm install
+npm run start:dev
+```
+
+## API Endpoints
+
+### 1. Провайдерлар ҳақида маълумот
+
+```http
+GET /payments/providers
+```
+
+**Жавоб:**
+```json
+{
+  "providers": ["payme", "click", "uzcard", "humo", "apelsin"],
+  "message": "Mavjud to'lov provayderlari"
+}
+```
+
+### 2. Конкрет провайдер ҳақида маълумот
+
+```http
+GET /payments/providers/{provider}
+```
+
+**Мисол:**
+```http
+GET /payments/providers/payme
+```
+
+**Жавоб:**
+```json
+{
+  "name": "Payme",
+  "description": "Payme to'lov tizimi",
+  "supportedMethods": ["create", "check"],
+  "currency": ["UZS"]
+}
+```
+
+### 3. To'lov яратиш (Универсал)
+
+```http
+POST /payments/create
+```
+
+**Request Body:**
+```json
+{
+  "provider": "payme",
+  "orderId": "12345",
+  "amount": 100000,
+  "description": "Mahsulot sotib olish",
+  "returnUrl": "https://yoursite.com/return"
+}
+```
+
+**Payme учун мисол:**
+```json
+{
+  "provider": "payme",
+  "orderId": "order_123",
+  "amount": 50000
+}
+```
+
+**Click учун мисол:**
+```json
+{
+  "provider": "click", 
+  "orderId": "order_456",
+  "amount": 75000,
+  "phoneNumber": "+998901234567"
+}
+```
+
+**UzCard учун мисол:**
+```json
+{
+  "provider": "uzcard",
+  "orderId": "order_789", 
+  "amount": 100000,
+  "cardNumber": "8600123456789012"
+}
+```
+
+**Humo учун мисол:**
+```json
+{
+  "provider": "humo",
+  "orderId": "order_101",
+  "amount": 25000,
+  "currency": "UZS"
+}
+```
+
+**Apelsin учун мисол:**
+```json
+{
+  "provider": "apelsin",
+  "orderId": "order_202",
+  "amount": 150000,
+  "description": "Online to'lov",
+  "returnUrl": "https://mysite.com/success"
+}
+```
+
+### 4. To'lov статусини текшириш
+
+```http
+POST /payments/check
+```
+
+**Request Body:**
+```json
+{
+  "provider": "payme",
+  "transactionId": "transaction_12345"
+}
+```
+
+### 5. To'lovни бекор қилиш
+
+```http
+POST /payments/cancel
+```
+
+**Request Body:**
+```json
+{
+  "provider": "uzcard",
+  "transactionId": "transaction_67890",
+  "amount": 50000
+}
+```
+
+## Архитектура
+
+Проект **Driver Pattern** архитектурасида қурилган:
+
+```
+src/payments/
+├── interfaces/
+│   └── payment-driver.interface.ts  # Умумий интерфейс
+├── drivers/                         # Ҳар бир банк учун драйвер
+│   ├── payme.driver.ts
+│   ├── click.driver.ts
+│   ├── uzcard.driver.ts
+│   ├── humo.driver.ts
+│   └── apelsin.driver.ts
+├── dto/
+│   └── payment.dto.ts               # DTO лар
+├── payments.service.ts              # Асосий сервис
+├── payments.controller.ts           # API controller
+└── payments.module.ts               # NestJS модуль
+```
+
+## Янги банк қўшиш
+
+Янги банк қўшиш учун:
+
+1. `PaymentDriver` интерфейсини implement қилувчи янги драйвер яратинг:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { PaymentDriver } from '../interfaces/payment-driver.interface';
+
+@Injectable()
+export class NewBankDriver implements PaymentDriver {
+  async createPayment(data: any): Promise<any> {
+    // Банк API'си билан интеграция
+  }
+
+  async checkPayment(data: any): Promise<any> {
+    // Статус текшириш
+  }
+
+  async cancelPayment?(data: any): Promise<any> {
+    // Бекор қилиш (ихтиёрий)
+  }
+}
+```
+
+2. `PaymentsService`га янги провайдерни қўшинг
+3. `PaymentsModule`га янги драйверни provider сифатида қўшинг
+
+## Хуллосалар
+
+Бу SDK орқали сиз:
+- ✅ Барча банклар учун бир хил API ишлатасиз
+- ✅ Янги банкларни осон қўша оласиз  
+- ✅ Кодни қайта ишлатиш имкониятига эгасиз
+- ✅ Типизация ва хатоларни бошқариш мавжуд
+- ✅ NestJS ecosystem бilan интеграция
+
+**Демак, жавоб: ҲА! Ўзбекистондаги ҳар турли банклар учун биргина универсал API орқали to'lov қилиш мумкин!** 🎉
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->

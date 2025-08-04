@@ -1,39 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentDriver } from '../interfaces/payment-driver.interface';
 import axios from 'axios';
-import * as crypto from 'crypto';
 
 @Injectable()
-export class ClickDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.click.uz/v2';
+export class UzcardDriver implements PaymentDriver {
+  private readonly apiUrl = 'https://api.uzcard.uz/api/v1';
+  private readonly terminalId = 'your_terminal_id';
+  private readonly terminalUserId = 'your_terminal_user_id';
   private readonly serviceId = 'your_service_id';
-  private readonly merchantId = 'your_merchant_id';
-  private readonly secretKey = 'your_secret_key';
-
-  private generateSignature(data: any): string {
-    const signString = Object.keys(data)
-      .sort()
-      .map((key) => `${key}=${data[key]}`)
-      .join('&');
-    return crypto
-      .createHash('md5')
-      .update(signString + this.secretKey)
-      .digest('hex');
-  }
 
   async createPayment(data: any): Promise<any> {
-    const { orderId, amount, phoneNumber } = data;
+    const { orderId, amount, cardNumber } = data;
 
     const payload = {
+      terminal_id: this.terminalId,
+      terminal_user_id: this.terminalUserId,
       service_id: this.serviceId,
-      merchant_id: this.merchantId,
       amount: amount,
-      transaction_param: orderId,
-      phone_number: phoneNumber,
-      timestamp: Math.floor(Date.now() / 1000),
+      order_id: orderId,
+      card_number: cardNumber,
     };
-
-    payload['sign'] = this.generateSignature(payload);
 
     try {
       const response = await axios.post(
@@ -48,14 +34,14 @@ export class ClickDriver implements PaymentDriver {
       );
 
       return {
-        provider: 'click',
+        provider: 'uzcard',
         transactionId: response.data.transaction_id,
         status: response.data.status,
         paymentUrl: response.data.payment_url,
         ...response.data,
       };
     } catch (error) {
-      throw new Error(`Click payment creation failed: ${error.message}`);
+      throw new Error(`UzCard payment creation failed: ${error.message}`);
     }
   }
 
@@ -63,13 +49,9 @@ export class ClickDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      service_id: this.serviceId,
-      merchant_id: this.merchantId,
+      terminal_id: this.terminalId,
       transaction_id: transactionId,
-      timestamp: Math.floor(Date.now() / 1000),
     };
-
-    payload['sign'] = this.generateSignature(payload);
 
     try {
       const response = await axios.post(
@@ -83,13 +65,43 @@ export class ClickDriver implements PaymentDriver {
       );
 
       return {
-        provider: 'click',
+        provider: 'uzcard',
         transactionId: transactionId,
         status: response.data.status,
         ...response.data,
       };
     } catch (error) {
-      throw new Error(`Click payment check failed: ${error.message}`);
+      throw new Error(`UzCard payment check failed: ${error.message}`);
+    }
+  }
+
+  async cancelPayment(data: any): Promise<any> {
+    const { transactionId } = data;
+
+    const payload = {
+      terminal_id: this.terminalId,
+      transaction_id: transactionId,
+    };
+
+    try {
+      const response = await axios.post(
+        `${this.apiUrl}/payment/cancel`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      return {
+        provider: 'uzcard',
+        transactionId: transactionId,
+        status: 'cancelled',
+        ...response.data,
+      };
+    } catch (error) {
+      throw new Error(`UzCard payment cancellation failed: ${error.message}`);
     }
   }
 }

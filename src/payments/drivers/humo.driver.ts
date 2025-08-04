@@ -4,36 +4,32 @@ import axios from 'axios';
 import * as crypto from 'crypto';
 
 @Injectable()
-export class ClickDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.click.uz/v2';
-  private readonly serviceId = 'your_service_id';
+export class HumoDriver implements PaymentDriver {
+  private readonly apiUrl = 'https://api.humo.tj/v1';
   private readonly merchantId = 'your_merchant_id';
   private readonly secretKey = 'your_secret_key';
 
   private generateSignature(data: any): string {
-    const signString = Object.keys(data)
-      .sort()
-      .map((key) => `${key}=${data[key]}`)
-      .join('&');
+    const sortedKeys = Object.keys(data).sort();
+    const signString = sortedKeys.map((key) => `${key}=${data[key]}`).join('&');
     return crypto
-      .createHash('md5')
-      .update(signString + this.secretKey)
+      .createHmac('sha256', this.secretKey)
+      .update(signString)
       .digest('hex');
   }
 
   async createPayment(data: any): Promise<any> {
-    const { orderId, amount, phoneNumber } = data;
+    const { orderId, amount, currency = 'UZS' } = data;
 
     const payload = {
-      service_id: this.serviceId,
       merchant_id: this.merchantId,
+      order_id: orderId,
       amount: amount,
-      transaction_param: orderId,
-      phone_number: phoneNumber,
+      currency: currency,
       timestamp: Math.floor(Date.now() / 1000),
     };
 
-    payload['sign'] = this.generateSignature(payload);
+    payload['signature'] = this.generateSignature(payload);
 
     try {
       const response = await axios.post(
@@ -48,14 +44,14 @@ export class ClickDriver implements PaymentDriver {
       );
 
       return {
-        provider: 'click',
+        provider: 'humo',
         transactionId: response.data.transaction_id,
         status: response.data.status,
         paymentUrl: response.data.payment_url,
         ...response.data,
       };
     } catch (error) {
-      throw new Error(`Click payment creation failed: ${error.message}`);
+      throw new Error(`Humo payment creation failed: ${error.message}`);
     }
   }
 
@@ -63,13 +59,12 @@ export class ClickDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      service_id: this.serviceId,
       merchant_id: this.merchantId,
       transaction_id: transactionId,
       timestamp: Math.floor(Date.now() / 1000),
     };
 
-    payload['sign'] = this.generateSignature(payload);
+    payload['signature'] = this.generateSignature(payload);
 
     try {
       const response = await axios.post(
@@ -83,13 +78,46 @@ export class ClickDriver implements PaymentDriver {
       );
 
       return {
-        provider: 'click',
+        provider: 'humo',
         transactionId: transactionId,
         status: response.data.status,
         ...response.data,
       };
     } catch (error) {
-      throw new Error(`Click payment check failed: ${error.message}`);
+      throw new Error(`Humo payment check failed: ${error.message}`);
+    }
+  }
+
+  async cancelPayment(data: any): Promise<any> {
+    const { transactionId } = data;
+
+    const payload = {
+      merchant_id: this.merchantId,
+      transaction_id: transactionId,
+      timestamp: Math.floor(Date.now() / 1000),
+    };
+
+    payload['signature'] = this.generateSignature(payload);
+
+    try {
+      const response = await axios.post(
+        `${this.apiUrl}/payment/refund`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      return {
+        provider: 'humo',
+        transactionId: transactionId,
+        status: 'refunded',
+        ...response.data,
+      };
+    } catch (error) {
+      throw new Error(`Humo payment cancellation failed: ${error.message}`);
     }
   }
 }
