@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentDriver } from '../interfaces/payment-driver.interface';
+import { PaymentConfigService } from '../../config/payment-config.service';
 import axios from 'axios';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class ApelsinDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.apelsin.uz/v1';
-  private readonly terminalKey = 'your_terminal_key';
-  private readonly password = 'your_password';
+  private config: any;
+
+  constructor(private readonly configService: PaymentConfigService) {
+    this.config = this.configService.apelsinConfig;
+  }
 
   private generateToken(data: any): string {
     const values = Object.keys(data)
@@ -16,7 +19,7 @@ export class ApelsinDriver implements PaymentDriver {
       .join('');
     return crypto
       .createHash('sha256')
-      .update(values + this.password)
+      .update(values + this.config.password)
       .digest('hex');
   }
 
@@ -24,7 +27,7 @@ export class ApelsinDriver implements PaymentDriver {
     const { orderId, amount, description, returnUrl } = data;
 
     const payload = {
-      TerminalKey: this.terminalKey,
+      TerminalKey: this.config.terminalKey,
       Amount: amount * 100, // Apelsin tiyin bilan ishlaydi
       OrderId: orderId,
       Description: description || "To'lov",
@@ -34,7 +37,7 @@ export class ApelsinDriver implements PaymentDriver {
     payload['Token'] = this.generateToken(payload);
 
     try {
-      const response = await axios.post(`${this.apiUrl}/Init`, payload, {
+      const response = await axios.post(`${this.config.apiUrl}/Init`, payload, {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -57,18 +60,22 @@ export class ApelsinDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      TerminalKey: this.terminalKey,
+      TerminalKey: this.config.terminalKey,
       PaymentId: transactionId,
     };
 
     payload['Token'] = this.generateToken(payload);
 
     try {
-      const response = await axios.post(`${this.apiUrl}/GetState`, payload, {
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        `${this.config.apiUrl}/GetState`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
 
       return {
         provider: 'apelsin',
@@ -85,7 +92,7 @@ export class ApelsinDriver implements PaymentDriver {
     const { transactionId, amount } = data;
 
     const payload = {
-      TerminalKey: this.terminalKey,
+      TerminalKey: this.config.terminalKey,
       PaymentId: transactionId,
       Amount: amount ? amount * 100 : undefined,
     };
@@ -93,11 +100,15 @@ export class ApelsinDriver implements PaymentDriver {
     payload['Token'] = this.generateToken(payload);
 
     try {
-      const response = await axios.post(`${this.apiUrl}/Cancel`, payload, {
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        `${this.config.apiUrl}/Cancel`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
 
       return {
         provider: 'apelsin',

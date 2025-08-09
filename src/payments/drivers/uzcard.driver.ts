@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentDriver } from '../interfaces/payment-driver.interface';
+import { PaymentConfigService } from '../../config/payment-config.service';
 import axios from 'axios';
 
 @Injectable()
 export class UzcardDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.uzcard.uz/api/v1';
-  private readonly terminalId = 'your_terminal_id';
-  private readonly terminalUserId = 'your_terminal_user_id';
-  private readonly serviceId = 'your_service_id';
+  private config: any;
+
+  constructor(private readonly configService: PaymentConfigService) {
+    this.config = this.configService.uzcardConfig;
+  }
 
   async createPayment(data: any): Promise<any> {
     const { orderId, amount, cardNumber } = data;
 
     const payload = {
-      terminal_id: this.terminalId,
-      terminal_user_id: this.terminalUserId,
-      service_id: this.serviceId,
+      terminal_id: this.config.terminalId,
+      terminal_user_id: this.config.terminalUserId,
+      service_id: this.config.serviceId,
       amount: amount,
       order_id: orderId,
       card_number: cardNumber,
@@ -23,7 +25,7 @@ export class UzcardDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/create`,
+        `${this.config.apiUrl}/payment/create`,
         payload,
         {
           headers: {
@@ -49,13 +51,13 @@ export class UzcardDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      terminal_id: this.terminalId,
+      terminal_id: this.config.terminalId,
       transaction_id: transactionId,
     };
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/status`,
+        `${this.config.apiUrl}/payment/status`,
         payload,
         {
           headers: {
@@ -79,13 +81,13 @@ export class UzcardDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      terminal_id: this.terminalId,
+      terminal_id: this.config.terminalId,
       transaction_id: transactionId,
     };
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/cancel`,
+        `${this.config.apiUrl}/payment/cancel`,
         payload,
         {
           headers: {

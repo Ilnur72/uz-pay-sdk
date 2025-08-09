@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentDriver } from '../interfaces/payment-driver.interface';
+import { PaymentConfigService } from '../../config/payment-config.service';
 import axios from 'axios';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class ClickDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.click.uz/v2';
-  private readonly serviceId = 'your_service_id';
-  private readonly merchantId = 'your_merchant_id';
-  private readonly secretKey = 'your_secret_key';
+  private config: any;
+
+  constructor(private readonly configService: PaymentConfigService) {
+    this.config = this.configService.clickConfig;
+  }
 
   private generateSignature(data: any): string {
     const signString = Object.keys(data)
@@ -17,7 +19,7 @@ export class ClickDriver implements PaymentDriver {
       .join('&');
     return crypto
       .createHash('md5')
-      .update(signString + this.secretKey)
+      .update(signString + this.config.secretKey)
       .digest('hex');
   }
 
@@ -25,8 +27,8 @@ export class ClickDriver implements PaymentDriver {
     const { orderId, amount, phoneNumber } = data;
 
     const payload = {
-      service_id: this.serviceId,
-      merchant_id: this.merchantId,
+      service_id: this.config.serviceId,
+      merchant_id: this.config.merchantId,
       amount: amount,
       transaction_param: orderId,
       phone_number: phoneNumber,
@@ -37,7 +39,7 @@ export class ClickDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/create`,
+        `${this.config.apiUrl}/payment/create`,
         payload,
         {
           headers: {
@@ -63,8 +65,8 @@ export class ClickDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      service_id: this.serviceId,
-      merchant_id: this.merchantId,
+      service_id: this.config.serviceId,
+      merchant_id: this.config.merchantId,
       transaction_id: transactionId,
       timestamp: Math.floor(Date.now() / 1000),
     };
@@ -73,7 +75,7 @@ export class ClickDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/status`,
+        `${this.config.apiUrl}/payment/status`,
         payload,
         {
           headers: {

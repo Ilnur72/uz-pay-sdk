@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentDriver } from '../interfaces/payment-driver.interface';
+import { PaymentConfigService } from '../../config/payment-config.service';
 import axios from 'axios';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class HumoDriver implements PaymentDriver {
-  private readonly apiUrl = 'https://api.humo.tj/v1';
-  private readonly merchantId = 'your_merchant_id';
-  private readonly secretKey = 'your_secret_key';
+  private config: any;
+
+  constructor(private readonly configService: PaymentConfigService) {
+    this.config = this.configService.humoConfig;
+  }
 
   private generateSignature(data: any): string {
     const sortedKeys = Object.keys(data).sort();
     const signString = sortedKeys.map((key) => `${key}=${data[key]}`).join('&');
     return crypto
-      .createHmac('sha256', this.secretKey)
+      .createHmac('sha256', this.config.secretKey)
       .update(signString)
       .digest('hex');
   }
@@ -22,7 +25,7 @@ export class HumoDriver implements PaymentDriver {
     const { orderId, amount, currency = 'UZS' } = data;
 
     const payload = {
-      merchant_id: this.merchantId,
+      merchant_id: this.config.merchantId,
       order_id: orderId,
       amount: amount,
       currency: currency,
@@ -33,7 +36,7 @@ export class HumoDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/create`,
+        `${this.config.apiUrl}/payment/create`,
         payload,
         {
           headers: {
@@ -59,7 +62,7 @@ export class HumoDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      merchant_id: this.merchantId,
+      merchant_id: this.config.merchantId,
       transaction_id: transactionId,
       timestamp: Math.floor(Date.now() / 1000),
     };
@@ -68,7 +71,7 @@ export class HumoDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/status`,
+        `${this.config.apiUrl}/payment/status`,
         payload,
         {
           headers: {
@@ -92,7 +95,7 @@ export class HumoDriver implements PaymentDriver {
     const { transactionId } = data;
 
     const payload = {
-      merchant_id: this.merchantId,
+      merchant_id: this.config.merchantId,
       transaction_id: transactionId,
       timestamp: Math.floor(Date.now() / 1000),
     };
@@ -101,7 +104,7 @@ export class HumoDriver implements PaymentDriver {
 
     try {
       const response = await axios.post(
-        `${this.apiUrl}/payment/refund`,
+        `${this.config.apiUrl}/payment/refund`,
         payload,
         {
           headers: {
