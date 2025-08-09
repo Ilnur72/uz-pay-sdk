@@ -1,18 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as Redis from 'ioredis';
+import Redis from 'ioredis';
 import { logger } from '../logger/logger.config';
 
 @Injectable()
 export class CacheService {
-  private readonly redis: Redis.Redis;
+  private readonly redis: Redis;
 
   constructor(private configService: ConfigService) {
     this.redis = new Redis({
       host: this.configService.get('REDIS_HOST', 'localhost'),
       port: this.configService.get('REDIS_PORT', 6379),
       password: this.configService.get('REDIS_PASSWORD'),
-      retryDelayOnFailover: 100,
       lazyConnect: true,
     });
 

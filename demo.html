@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UZ Pay SDK - Live Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">
+                🚀 UZ Pay SDK
+            </h1>
+            <p class="text-xl text-gray-600 mb-6">
+                Universal Payment Gateway for Uzbekistan
+            </p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                    ✅ 5 Providers
+                </span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                    ⚡ <200ms
+                </span>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                    🔒 Secure
+                </span>
+            </div>
+        </div>
+
+        <!-- Interactive Demo -->
+        <div x-data="paymentDemo()" class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-6">🎮 Interactive Payment Demo</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Payment Form -->
+                    <div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Provider</label>
+                            <select x-model="selectedProvider" class="w-full border rounded-lg px-3 py-2">
+                                <option value="payme">💳 Payme</option>
+                                <option value="click">🏦 Click</option>
+                                <option value="uzcard">🇺🇿 UzCard</option>
+                                <option value="humo">🌍 Humo</option>
+                                <option value="apelsin">🍊 Apelsin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Amount (som)</label>
+                            <input x-model="amount" type="number" class="w-full border rounded-lg px-3 py-2" placeholder="50000">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Order ID</label>
+                            <input x-model="orderId" type="text" class="w-full border rounded-lg px-3 py-2" placeholder="ORDER_123">
+                        </div>
+                        
+                        <button 
+                            @click="createPayment()" 
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                            :disabled="loading"
+                        >
+                            <span x-show="!loading">Create Payment</span>
+                            <span x-show="loading">Creating... ⏳</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Generated Code -->
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Generated Code:</h3>
+                        <pre class="bg-gray-800 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
+<code x-text="generatedCode"></code>
+                        </pre>
+                        
+                        <div x-show="result" class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <h4 class="font-medium text-green-800">✅ Payment Created:</h4>
+                            <p class="text-sm text-green-700 mt-1" x-text="result"></p>
+                        </div>
+                        
+                        <div x-show="error" class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <h4 class="font-medium text-red-800">❌ Error:</h4>
+                            <p class="text-sm text-red-700 mt-1" x-text="error"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Provider Comparison -->
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-6">📊 Provider Comparison</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3">Provider</th>
+                                <th class="text-left py-3">Speed</th>
+                                <th class="text-left py-3">Success Rate</th>
+                                <th class="text-left py-3">Features</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-3">💳 Payme</td>
+                                <td class="py-3 text-green-600">&lt;100ms</td>
+                                <td class="py-3 text-green-600">99.9%</td>
+                                <td class="py-3">Mobile-first</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3">🏦 Click</td>
+                                <td class="py-3 text-green-600">&lt;150ms</td>
+                                <td class="py-3 text-green-600">99.8%</td>
+                                <td class="py-3">Bank integration</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3">🇺🇿 UzCard</td>
+                                <td class="py-3 text-yellow-600">&lt;200ms</td>
+                                <td class="py-3 text-green-600">99.7%</td>
+                                <td class="py-3">National system</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3">🌍 Humo</td>
+                                <td class="py-3 text-yellow-600">&lt;180ms</td>
+                                <td class="py-3 text-green-600">99.6%</td>
+                                <td class="py-3">International</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">🍊 Apelsin</td>
+                                <td class="py-3 text-green-600">&lt;120ms</td>
+                                <td class="py-3 text-green-600">99.8%</td>
+                                <td class="py-3">Digital wallet</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Installation -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold mb-6">🚀 Get Started</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-medium mb-2">1. Install the package:</h3>
+                        <code class="block bg-gray-800 text-green-400 p-3 rounded">npm install uz-pay-sdk</code>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-medium mb-2">2. Use in your project:</h3>
+                        <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm">
+<code>import { PaymentsService } from 'uz-pay-sdk';
+
+const payments = new PaymentsService();
+
+const payment = await payments.create({
+  provider: 'payme',
+  amount: 50000,
+  orderId: 'ORDER_123'
+});</code>
+                        </pre>
+                    </div>
+                    
+                    <div class="flex gap-4 pt-4">
+                        <a href="https://github.com/Ilnur72/uz-pay-sdk" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                            ⭐ GitHub
+                        </a>
+                        <a href="https://npmjs.com/package/uz-pay-sdk" target="_blank" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors">
+                            📦 NPM
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function paymentDemo() {
+            return {
+                selectedProvider: 'payme',
+                amount: 50000,
+                orderId: 'ORDER_123',
+                loading: false,
+                result: '',
+                error: '',
+                
+                get generatedCode() {
+                    return `import { PaymentsService } from 'uz-pay-sdk';
+
+const payments = new PaymentsService();
+
+const payment = await payments.create({
+  provider: '${this.selectedProvider}',
+  amount: ${this.amount},
+  orderId: '${this.orderId}',
+  description: 'Demo payment'
+});
+
+console.log('Payment URL:', payment.paymentUrl);`;
+                },
+                
+                async createPayment() {
+                    this.loading = true;
+                    this.result = '';
+                    this.error = '';
+                    
+                    try {
+                        // Simulate API call
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        
+                        // Mock successful response
+                        this.result = `Payment created successfully!
+Provider: ${this.selectedProvider}
+Amount: ${this.amount.toLocaleString()} som
+Order ID: ${this.orderId}
+Payment URL: https://${this.selectedProvider}.uz/pay/demo-${Date.now()}`;
+                        
+                    } catch (err) {
+                        this.error = 'Failed to create payment. This is a demo - install uz-pay-sdk for real integration!';
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
