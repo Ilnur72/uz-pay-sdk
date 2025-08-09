@@ -1,6 +1,6 @@
 {
   "name": "uz-pay-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "🚀 Universal Payment SDK for Uzbekistan - Integrate Payme, Click, UzCard, Humo & Apelsin with one simple API. Battle-tested, production-ready, 95% faster integration.",
   "author": "Umirbayev Ilnur <umirbayev72@gmail.com>",
   "private": false,
@@ -17,7 +17,7 @@
     "uzbekistan",
     "payme",
     "click",
-    "uzcard", 
+    "uzcard",
     "humo",
     "apelsin",
     "payment-gateway",
