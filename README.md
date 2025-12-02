@@ -6,10 +6,15 @@
 
 [![NPM Version](https://img.shields.io/npm/v/uz-pay-sdk.svg)](https://www.npmjs.com/package/uz-pay-sdk)
 [![Downloads](https://img.shields.io/npm/dm/uz-pay-sdk.svg)](https://www.npmjs.com/package/uz-pay-sdk)
+[![GitHub Stars](https://img.shields.io/github/stars/Ilnur72/uz-pay-sdk?style=social)](https://github.com/Ilnur72/uz-pay-sdk)
+[![GitHub Forks](https://img.shields.io/github/forks/Ilnur72/uz-pay-sdk?style=social)](https://github.com/Ilnur72/uz-pay-sdk)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/built%20with-NestJS-red.svg)](https://nestjs.com/)
-[![Tests](https://img.shields.io/badge/tests-8%2F8-passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-8%2F8-passing-brightgreen.svg)](https://github.com/Ilnur72/uz-pay-sdk/actions)
+[![Issues](https://img.shields.io/github/issues/Ilnur72/uz-pay-sdk)](https://github.com/Ilnur72/uz-pay-sdk/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/Ilnur72/uz-pay-sdk)](https://github.com/Ilnur72/uz-pay-sdk)
 
 **🎯 The ONLY complete payment ecosystem for Uzbekistan**
 

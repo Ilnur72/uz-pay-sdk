@@ -2,8 +2,9 @@
 
 ## 📝 **EMAIL DRAFT (ENGLISH)**
 
-**To:** api@click.uz, developer@click.uz  
-**Subject:** Partnership Opportunity: Universal Payment SDK for Uzbekistan Developer Community  
+**To:** corp@click.uz  
+**CC:** info@click.uz  
+**Subject:** Partnership Proposal: Universal Payment SDK for Uzbekistan Developer Ecosystem  
 **From:** umirbayev2004@gmail.com
 
 ---
