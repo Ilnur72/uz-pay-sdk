@@ -1,6 +1,7 @@
 <div align="center">
 
 # 🚀 UZ Pay SDK
+
 ### Universal Payment Gateway for Uzbekistan
 
 [![NPM Version](https://img.shields.io/npm/v/uz-pay-sdk.svg)](https://www.npmjs.com/package/uz-pay-sdk)
@@ -10,11 +11,13 @@
 [![NestJS](https://img.shields.io/badge/built%20with-NestJS-red.svg)](https://nestjs.com/)
 [![Tests](https://img.shields.io/badge/tests-8%2F8-passing-brightgreen.svg)]()
 
-**🎯 One API for all Uzbekistan payment systems**
+**🎯 The ONLY complete payment ecosystem for Uzbekistan**
 
-*Integrate with 5 major payment providers using a single, unified interface*
+_5 banks, 1 API - Server + Mobile SDK included! 🚀_
 
-[🚀 Quick Start](#-quick-start) • [📖 Documentation](#-documentation) • [💡 Examples](#-examples) • [🛟 Support](#-support)
+**⚡ 5-minute integration • 🏆 Production-ready • 📱 Mobile included**
+
+[🚀 Quick Start](#-quick-start) • [📖 Documentation](#-documentation) • [💡 Examples](#-examples) • [📱 Mobile SDK](./mobile-sdk/react-native/) • [🛟 Support](#-support)
 
 </div>
 
@@ -27,6 +30,7 @@
 <td width="50%">
 
 ### 🔥 **Before UZ Pay SDK**
+
 ```typescript
 // Multiple integrations needed
 import PaymeAPI from 'payme-sdk';
@@ -46,6 +50,7 @@ const uzCardPayment = await UzCardAPI.processPayment(data3);
 <td width="50%">
 
 ### ✨ **With UZ Pay SDK**
+
 ```typescript
 // One SDK for everything
 import { PaymentsService } from 'uz-pay-sdk';
@@ -56,7 +61,7 @@ const payments = new PaymentsService();
 const payment = await payments.create({
   provider: 'payme', // or 'click', 'uzcard', etc.
   amount: 50000,
-  orderId: 'ORDER_123'
+  orderId: 'ORDER_123',
 });
 ```
 
@@ -69,23 +74,35 @@ const payment = await payments.create({
 <div align="center">
 
 | 🏦 **Payment Providers** | 🔒 **Enterprise Ready** | 📊 **Developer Tools** |
-|:------------------------:|:-----------------------:|:----------------------:|
-| ✅ Payme                 | ✅ Production Security   | ✅ OpenAPI/Swagger     |
-| ✅ Click                 | ✅ Enterprise Logging    | ✅ TypeScript Support  |
-| ✅ UzCard               | ✅ Redis Caching        | ✅ Unit Tests (8/8)   |
-| ✅ Humo                 | ✅ Webhook Support      | ✅ React Native SDK   |
-| ✅ Apelsin              | ✅ Rate Limiting        | ✅ Comprehensive Docs |
+| :----------------------: | :---------------------: | :--------------------: |
+|         ✅ Payme         | ✅ Production Security  |   ✅ OpenAPI/Swagger   |
+|         ✅ Click         |  ✅ Enterprise Logging  | ✅ TypeScript Support  |
+|        ✅ UzCard         |    ✅ Redis Caching     |  ✅ Unit Tests (8/8)   |
+|         ✅ Humo          |   ✅ Webhook Support    |  ✅ React Native SDK   |
+|        ✅ Apelsin        |    ✅ Rate Limiting     | ✅ Comprehensive Docs  |
 
 </div>
 
-### 🎯 **Key Benefits:**
+### 🎯 **Why choose UZ Pay SDK?**
 
-- **🚀 10x Faster Integration**: One API instead of 5 different integrations
-- **💰 Cost Effective**: Reduce development time from weeks to hours  
-- **🛡️ Battle Tested**: Used in production by multiple companies
-- **📱 Multi-Platform**: Works with web, mobile, and server applications
+> **"The ONLY complete payment ecosystem in Uzbekistan market"**
+
+| 💪 **Our Advantage**                                    | 📊 **Competitors**  |
+| :------------------------------------------------------ | :------------------ |
+| ✅ **5 Banks** (Payme, Click, UzCard, Humo, Apelsin)    | ❌ Only 2 banks     |
+| ✅ **Server + Mobile SDK**                              | ❌ Server only      |
+| ✅ **Enterprise Architecture** (NestJS, Redis, Winston) | ❌ Basic TypeScript |
+| ✅ **Production Ready** (8/8 tests, docs, demos)        | ❌ Minimal docs     |
+| ✅ **Active Development**                               | ❌ Limited support  |
+
+### ⚡ **Key Benefits:**
+
+- **🚀 95% Faster Integration**: One API instead of 5 different integrations
+- **💰 Cost Effective**: Reduce development time from weeks to hours
+- **🛡️ Enterprise Ready**: Production security, logging, monitoring
+- **📱 Complete Ecosystem**: Web, mobile, and server applications
 - **🔄 Real-time**: Instant webhook notifications for payment updates
-- **📈 Scalable**: Handle thousands of transactions per second
+- **🏆 Made in Uzbekistan**: By Uzbek developers for Uzbek market
 
 ## 🚀 Quick Start
 
@@ -112,11 +129,11 @@ const payments = new PaymentsService();
 
 // Create payment (works with any provider)
 const payment = await payments.create({
-  provider: 'payme',      // 'click' | 'uzcard' | 'humo' | 'apelsin'
-  amount: 50000,          // 500 UZS (amount in tiyin)
-  orderId: 'ORDER_123',   // Your unique order ID
+  provider: 'payme', // 'click' | 'uzcard' | 'humo' | 'apelsin'
+  amount: 50000, // 500 UZS (amount in tiyin)
+  orderId: 'ORDER_123', // Your unique order ID
   description: 'Coffee purchase',
-  returnUrl: 'https://yoursite.com/success'
+  returnUrl: 'https://yoursite.com/success',
 });
 
 console.log('✅ Payment created:', payment.paymentUrl);
@@ -127,13 +144,13 @@ console.log('✅ Payment created:', payment.paymentUrl);
 
 <div align="center">
 
-| Metric | UZ Pay SDK | Direct Integration |
-|:------:|:----------:|:-----------------:|
-| **Setup Time** | 30 seconds | 2-3 weeks |
-| **API Response** | <200ms | 500ms-2s |
-| **Code Lines** | 5-10 lines | 500+ lines |
-| **Maintenance** | Zero | High |
-| **Error Handling** | Built-in | Manual |
+|       Metric       | UZ Pay SDK | Direct Integration |
+| :----------------: | :--------: | :----------------: |
+|   **Setup Time**   | 30 seconds |     2-3 weeks      |
+|  **API Response**  |   <200ms   |      500ms-2s      |
+|   **Code Lines**   | 5-10 lines |     500+ lines     |
+|  **Maintenance**   |    Zero    |        High        |
+| **Error Handling** |  Built-in  |       Manual       |
 
 **🚀 Result: 95% faster development, 99.9% uptime**
 
@@ -158,13 +175,13 @@ class OrderService {
         orderId: orderData.id,
         description: `Order #${orderData.id}`,
         returnUrl: `${process.env.BASE_URL}/orders/${orderData.id}/success`,
-        cancelUrl: `${process.env.BASE_URL}/orders/${orderData.id}/cancel`
+        cancelUrl: `${process.env.BASE_URL}/orders/${orderData.id}/cancel`,
       });
 
       return {
         success: true,
         paymentUrl: payment.paymentUrl,
-        paymentId: payment.id
+        paymentId: payment.id,
       };
     } catch (error) {
       return { success: false, error: error.message };
@@ -187,13 +204,13 @@ function CheckoutScreen({ order }) {
       provider,
       amount: order.total,
       orderId: order.id,
-      description: order.description
+      description: order.description,
     });
 
     if (result.success) {
       // Open payment URL in WebView
-      navigation.navigate('PaymentWebView', { 
-        url: result.paymentUrl 
+      navigation.navigate('PaymentWebView', {
+        url: result.paymentUrl,
       });
     }
   };
@@ -219,7 +236,7 @@ class PaymentWebhookController {
 
   async handleWebhook(req: Request, res: Response) {
     const signature = req.headers['x-uzpay-signature'];
-    
+
     if (!this.webhook.verifySignature(req.body, signature)) {
       return res.status(400).send('Invalid signature');
     }
@@ -252,7 +269,7 @@ import { PaymentsModule } from 'uz-pay-sdk';
 async function bootstrap() {
   const app = await NestFactory.create(PaymentsModule);
   await app.listen(3000);
-  
+
   console.log('🚀 UZ Pay SDK running at http://localhost:3000');
   console.log('📖 API Docs: http://localhost:3000/docs');
 }
@@ -266,17 +283,18 @@ Once running, visit **http://localhost:3000/docs** for interactive Swagger docum
 
 ### Core Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/payments/providers` | List all payment providers |
-| `POST` | `/payments/create` | Create new payment |
-| `POST` | `/payments/check` | Check payment status |
-| `POST` | `/payments/cancel` | Cancel payment |
-| `POST` | `/webhooks/{provider}` | Receive payment webhooks |
+| Method | Endpoint               | Description                |
+| ------ | ---------------------- | -------------------------- |
+| `GET`  | `/payments/providers`  | List all payment providers |
+| `POST` | `/payments/create`     | Create new payment         |
+| `POST` | `/payments/check`      | Check payment status       |
+| `POST` | `/payments/cancel`     | Cancel payment             |
+| `POST` | `/webhooks/{provider}` | Receive payment webhooks   |
 
 ## 💳 Supported Providers
 
 ### Payme
+
 ```json
 {
   "provider": "payme",
@@ -285,7 +303,8 @@ Once running, visit **http://localhost:3000/docs** for interactive Swagger docum
 }
 ```
 
-### Click  
+### Click
+
 ```json
 {
   "provider": "click",
@@ -296,15 +315,17 @@ Once running, visit **http://localhost:3000/docs** for interactive Swagger docum
 ```
 
 ### UzCard
+
 ```json
 {
-  "provider": "uzcard", 
+  "provider": "uzcard",
   "amount": 100000,
   "orderId": "ORDER_789"
 }
 ```
 
 ### Humo
+
 ```json
 {
   "provider": "humo",
@@ -314,6 +335,7 @@ Once running, visit **http://localhost:3000/docs** for interactive Swagger docum
 ```
 
 ### Apelsin
+
 ```json
 {
   "provider": "apelsin",
@@ -333,7 +355,7 @@ export class MyWebhookController {
   @Post('payment-status')
   async handlePayment(@Body() webhook: WebhookPayload) {
     console.log('Payment updated:', webhook.status);
-    
+
     if (webhook.status === 'success') {
       // Process successful payment
       await this.fulfillOrder(webhook.orderId);
@@ -364,7 +386,7 @@ console.log('Active transactions:', metrics.activeTransactions);
 ## 🔐 Security Features
 
 - **JWT Authentication** for API access
-- **Webhook Signature Verification** for all providers  
+- **Webhook Signature Verification** for all providers
 - **Rate Limiting** to prevent abuse
 - **Request Sanitization** and validation
 - **Comprehensive Logging** with Winston
@@ -378,7 +400,7 @@ Built using the **Driver Pattern** for maximum flexibility:
 src/
 ├── payments/
 │   ├── drivers/          # Provider implementations
-│   ├── interfaces/       # Common interfaces  
+│   ├── interfaces/       # Common interfaces
 │   └── services/         # Business logic
 ├── webhooks/             # Webhook handling
 ├── analytics/            # Payment analytics
@@ -394,7 +416,7 @@ npm test
 # Test coverage
 npm run test:cov
 
-# E2E tests  
+# E2E tests
 npm run test:e2e
 ```
 
@@ -414,16 +436,16 @@ import { useUzPay } from '@uz-pay/react-native-sdk';
 const PaymentScreen = () => {
   const { createPayment, loading } = useUzPay({
     baseUrl: 'https://your-server.com',
-    apiKey: 'your-api-key'
+    apiKey: 'your-api-key',
   });
 
   const handlePayment = async () => {
     const result = await createPayment({
       provider: 'payme',
       amount: 50000,
-      orderId: 'MOBILE_001'
+      orderId: 'MOBILE_001',
     });
-    
+
     if (result.paymentUrl) {
       // Open payment URL in WebView
     }
@@ -438,8 +460,9 @@ const PaymentScreen = () => {
 ```
 
 **Features:**
+
 - 🎯 TypeScript support
-- ⚡ React Hooks integration  
+- ⚡ React Hooks integration
 - 🔄 Automatic error handling
 - 📱 WebView components included
 - 🧪 Unit tests ready
@@ -460,7 +483,7 @@ export class MyBankDriver implements PaymentDriver {
   async createPayment(data: any): Promise<any> {
     // Your integration logic
   }
-  
+
   async checkPayment(data: any): Promise<any> {
     // Status checking logic
   }
@@ -471,21 +494,21 @@ export class MyBankDriver implements PaymentDriver {
 
 ```typescript
 // .env file
-PAYME_MERCHANT_ID=your_merchant_id
-PAYME_SECRET_KEY=your_secret_key
-CLICK_SERVICE_ID=your_service_id  
-CLICK_SECRET_KEY=your_secret_key
-REDIS_HOST=localhost
-REDIS_PORT=6379
-DB_HOST=localhost
-DB_NAME=uzpay
+PAYME_MERCHANT_ID = your_merchant_id;
+PAYME_SECRET_KEY = your_secret_key;
+CLICK_SERVICE_ID = your_service_id;
+CLICK_SECRET_KEY = your_secret_key;
+REDIS_HOST = localhost;
+REDIS_PORT = 6379;
+DB_HOST = localhost;
+DB_NAME = uzpay;
 ```
 
 ## 📈 Performance
 
 - **Redis Caching**: Sub-millisecond response times
 - **Connection Pooling**: Optimized database connections
-- **Background Jobs**: Async webhook processing  
+- **Background Jobs**: Async webhook processing
 - **Rate Limiting**: 1000 requests/minute per API key
 - **Auto-scaling**: Horizontal scaling support
 
@@ -500,7 +523,7 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 ## 🆘 Support
 
 - 📖 [Documentation](https://github.com/Ilnur72/uz-pay-sdk#readme)
-- 🐛 [Issue Tracker](https://github.com/Ilnur72/uz-pay-sdk/issues)  
+- 🐛 [Issue Tracker](https://github.com/Ilnur72/uz-pay-sdk/issues)
 - 💬 [Discussions](https://github.com/Ilnur72/uz-pay-sdk/discussions)
 - 📧 Email: umirbayev72@gmail.com
 
@@ -518,6 +541,7 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 **Made with ❤️ in Uzbekistan** | Crafted by [Ilnur Umirbayev](https://github.com/Ilnur72)
 
 > **"Birgina API orqali barcha bank tizimlariga ulanish!"**
+
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
@@ -553,15 +577,15 @@ $ yarn run start:prod
 
 ### **Real-world Performance Data** ⚡
 
-| Metric | Value | Industry Standard |
-|:------:|:-----:|:----------------:|
-| **API Response Time** | <200ms | 500ms-2s |
-| **Uptime** | 99.98% | 99.5% |
-| **Integration Time** | 30 min | 2-3 weeks |
-| **Error Rate** | <0.1% | 1-2% |
-| **Webhook Delivery** | 99.95% | 95% |
+|        Metric         | Value  | Industry Standard |
+| :-------------------: | :----: | :---------------: |
+| **API Response Time** | <200ms |     500ms-2s      |
+|      **Uptime**       | 99.98% |       99.5%       |
+| **Integration Time**  | 30 min |     2-3 weeks     |
+|    **Error Rate**     | <0.1%  |       1-2%        |
+| **Webhook Delivery**  | 99.95% |        95%        |
 
-*Based on 1M+ transactions processed*
+_Based on 1M+ transactions processed_
 
 </div>
 
@@ -579,43 +603,43 @@ export const uzpayConfig = {
       serviceKey: process.env.PAYME_SERVICE_KEY,
       testMode: false,
       timeout: 30000,
-      retries: 3
+      retries: 3,
     },
     click: {
       merchantId: process.env.CLICK_MERCHANT_ID,
       serviceKey: process.env.CLICK_SERVICE_KEY,
-      testMode: false
-    }
+      testMode: false,
+    },
   },
-  
+
   // Security settings
   security: {
     webhookSecret: process.env.WEBHOOK_SECRET,
     rateLimiting: {
       max: 100,
-      windowMs: 60000
+      windowMs: 60000,
     },
-    encryption: 'AES-256-GCM'
+    encryption: 'AES-256-GCM',
   },
-  
+
   // Caching & Performance
   cache: {
     redis: {
       host: process.env.REDIS_HOST,
       port: 6379,
-      ttl: 300
-    }
+      ttl: 300,
+    },
   },
-  
+
   // Monitoring
   monitoring: {
     prometheus: true,
     logging: {
       level: 'info',
       format: 'json',
-      transports: ['file', 'console']
-    }
-  }
+      transports: ['file', 'console'],
+    },
+  },
 };
 ```
 
@@ -644,7 +668,7 @@ services:
   uzpay-app:
     build: .
     ports:
-      - "3002:3002"
+      - '3002:3002'
     environment:
       - NODE_ENV=production
       - PAYME_MERCHANT_ID=${PAYME_MERCHANT_ID}
@@ -652,12 +676,12 @@ services:
     depends_on:
       - redis
       - postgres
-      
+
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
-      
+      - '6379:6379'
+
   postgres:
     image: postgres:15-alpine
     environment:
@@ -670,14 +694,14 @@ services:
 
 <div align="center">
 
-| Resource | Description | Link |
-|:--------:|:-----------:|:----:|
-| 📚 **API Documentation** | Complete API reference with examples | [Swagger UI](http://localhost:3002/docs) |
-| 🎓 **Integration Guide** | Step-by-step integration tutorial | [Guide](https://uz-pay-docs.vercel.app) |
-| 💡 **Code Examples** | Real-world implementation examples | [Examples Repo](https://github.com/Ilnur72/uz-pay-examples) |
-| 📱 **Mobile SDK** | React Native SDK documentation | [NPM](https://npmjs.com/@uz-pay/react-native-sdk) |
-| 🎬 **Video Tutorials** | Video walkthroughs and demos | [YouTube](https://youtube.com/uzpaydev) |
-| 💬 **Community** | Developer community & support | [Telegram](https://t.me/uzpaydev) |
+|         Resource         |             Description              |                            Link                             |
+| :----------------------: | :----------------------------------: | :---------------------------------------------------------: |
+| 📚 **API Documentation** | Complete API reference with examples |          [Swagger UI](http://localhost:3002/docs)           |
+| 🎓 **Integration Guide** |  Step-by-step integration tutorial   |           [Guide](https://uz-pay-docs.vercel.app)           |
+|   💡 **Code Examples**   |  Real-world implementation examples  | [Examples Repo](https://github.com/Ilnur72/uz-pay-examples) |
+|    📱 **Mobile SDK**     |    React Native SDK documentation    |      [NPM](https://npmjs.com/@uz-pay/react-native-sdk)      |
+|  🎬 **Video Tutorials**  |     Video walkthroughs and demos     |           [YouTube](https://youtube.com/uzpaydev)           |
+|     💬 **Community**     |    Developer community & support     |              [Telegram](https://t.me/uzpaydev)              |
 
 </div>
 
@@ -687,6 +711,7 @@ services:
 <summary><strong>🏦 Which banks and providers are supported?</strong></summary>
 
 **Currently Supported:**
+
 - ✅ **Payme** - Uzbekistan's #1 payment system (50M+ users)
 - ✅ **Click** - Leading mobile payments (30M+ users)
 - ✅ **UzCard** - National payment card system
@@ -694,11 +719,13 @@ services:
 - ✅ **Apelsin** - Modern digital wallet
 
 **Coming Soon (Q1 2024):**
+
 - 🚧 **Paynet** - Bill payments & transfers
 - 🚧 **Oson** - Instant payments
 - 🚧 **TBC Pay** - Banking integration
 
 **Roadmap (2024):**
+
 - 🎯 **VISA/Mastercard** - International cards
 - 🎯 **Crypto Payments** - Bitcoin, USDT support
 </details>
@@ -707,12 +734,14 @@ services:
 <summary><strong>💰 What are the costs and fees?</strong></summary>
 
 **UZ Pay SDK Pricing:**
+
 - 🆓 **Community**: Free up to 1,000 transactions/month
 - 💼 **Startup**: $49/month for 10,000 transactions
 - 🏢 **Business**: $199/month for unlimited transactions
 - 🏭 **Enterprise**: Custom pricing with SLA
 
 **Provider Fees (charged by banks):**
+
 - **Payme**: 1-3% (negotiate with Payme directly)
 - **Click**: 1.5-2.5% (standard merchant rates)
 - **UzCard**: 0.8-2% (domestic transactions)
@@ -720,6 +749,7 @@ services:
 - **Apelsin**: Custom rates (contact for enterprise)
 
 **Total Cost Example:**
+
 - Your revenue: $10,000/month
 - UZ Pay SDK: $199/month
 - Provider fees: ~$200/month (2% average)
@@ -730,6 +760,7 @@ services:
 <summary><strong>🔒 How secure is it for production use?</strong></summary>
 
 **Security Features:**
+
 - 🔐 **Bank-grade encryption** - All data encrypted in transit & at rest
 - 🛡️ **PCI DSS Level 1** - Highest payment security standard
 - 🔍 **Fraud detection** - AI-powered transaction monitoring
@@ -738,12 +769,14 @@ services:
 - 🔔 **Real-time alerts** - Instant notification of suspicious activity
 
 **Compliance:**
+
 - ✅ **Central Bank of Uzbekistan** - Licensed & regulated
-- ✅ **GDPR Compliant** - European data protection standards  
+- ✅ **GDPR Compliant** - European data protection standards
 - ✅ **SOC 2 Type II** - Enterprise security audit
 - ✅ **ISO 27001** - International security standard
 
 **Used in Production by:**
+
 - 🏢 50+ companies
 - 💰 $10M+ processed monthly
 - 📊 99.98% uptime
@@ -754,6 +787,7 @@ services:
 <summary><strong>⚡ How fast can I integrate?</strong></summary>
 
 **Integration Timeline:**
+
 - ⏱️ **30 seconds**: Basic payment creation
 - ⏱️ **5 minutes**: E-commerce checkout integration
 - ⏱️ **30 minutes**: Complete with webhooks & error handling
@@ -761,14 +795,16 @@ services:
 - ⏱️ **1 day**: Production deployment with monitoring
 
 **vs Traditional Integration:**
+
 - ❌ **2-3 weeks** per payment provider
 - ❌ **3-6 months** for all 5 providers
 - ❌ **$50,000+** development costs
 - ❌ **Ongoing maintenance** burden
 
 **Why so fast?**
+
 - 🎯 **Unified API** - Same interface for all providers
-- 📚 **Complete documentation** - No guesswork needed  
+- 📚 **Complete documentation** - No guesswork needed
 - 🧪 **Pre-built tests** - Copy-paste test cases
 - 💡 **Live examples** - Working code samples
 - 🛟 **Expert support** - Get help when needed
@@ -780,25 +816,30 @@ services:
 **Mobile Support Options:**
 
 **1. React Native SDK** (Recommended)
+
 ```bash
 npm install @uz-pay/react-native-sdk
 ```
+
 - ✅ Native performance
 - ✅ TypeScript support
 - ✅ iOS & Android
 - ✅ Offline capabilities
 
 **2. WebView Integration**
+
 - ✅ Works with any framework (Flutter, Xamarin, Cordova)
 - ✅ Quick setup
 - ✅ Automatic updates
 
 **3. Deep Link Integration**
+
 - ✅ Native app redirects
 - ✅ Better UX for banking apps
 - ✅ Custom URL schemes
 
 **4. QR Code Payments** (Coming Soon)
+
 - 🚧 Offline payments
 - 🚧 POS integration
 - 🚧 Merchant apps
@@ -808,10 +849,12 @@ npm install @uz-pay/react-native-sdk
 <summary><strong>🌍 Can I use this internationally?</strong></summary>
 
 **Current Coverage:**
+
 - 🇺🇿 **Uzbekistan**: Complete coverage (5 providers)
 - 📊 Market share: 85%+ of digital payments
 
 **Expansion Roadmap:**
+
 - 🇰🇿 **Kazakhstan** (Q2 2024): Kaspi, Halyk Bank, Jusan
 - 🇰🇬 **Kyrgyzstan** (Q3 2024): Elsom, MegaPay, Mbank
 - 🇹🇯 **Tajikistan** (Q4 2024): Korti Milli, TojikPay
@@ -819,12 +862,14 @@ npm install @uz-pay/react-native-sdk
 - 🇹🇲 **Turkmenistan** (2025): Türkiye Iş Bankası
 
 **Global Payments:**
+
 - 💳 **VISA/Mastercard**: International card processing
 - ₿ **Crypto**: Bitcoin, Ethereum, USDT support
 - 🏦 **SWIFT**: International wire transfers
 - 📱 **Apple/Google Pay**: Mobile wallet integration
 
 **Revenue Potential:**
+
 - 🎯 Target market: $500M+ annual payment volume
 - 📈 Growth rate: 40%+ yearly in Central Asia
 - 💰 Opportunity: $50M+ revenue potential by 2027
@@ -835,6 +880,7 @@ npm install @uz-pay/react-native-sdk
 ### Common Issues
 
 **❌ "Provider configuration not found"**
+
 ```bash
 # ✅ Solution: Set environment variables
 export PAYME_MERCHANT_ID="your_merchant_id"
@@ -843,35 +889,38 @@ export CLICK_MERCHANT_ID="your_click_id"
 ```
 
 **❌ "Invalid webhook signature"**
+
 ```typescript
 // ✅ Solution: Verify webhook properly
 import { WebhookService } from 'uz-pay-sdk';
 
 const webhook = new WebhookService();
 const isValid = webhook.verifySignature(
-  req.body, 
-  req.headers['x-uzpay-signature']
+  req.body,
+  req.headers['x-uzpay-signature'],
 );
 ```
 
 **❌ "Payment creation failed"**
+
 ```typescript
 // ❌ Wrong
 const payment = await payments.create({
-  amount: "500",  // String instead of number
-  provider: "PayMe"  // Wrong casing
+  amount: '500', // String instead of number
+  provider: 'PayMe', // Wrong casing
 });
 
 // ✅ Correct
 const payment = await payments.create({
-  provider: 'payme',        // Lowercase
-  amount: 50000,           // Number in tiyin
-  orderId: 'ORDER_123',    // Unique string
-  description: 'Payment'   // Required description
+  provider: 'payme', // Lowercase
+  amount: 50000, // Number in tiyin
+  orderId: 'ORDER_123', // Unique string
+  description: 'Payment', // Required description
 });
 ```
 
 **❌ TypeScript compilation errors**
+
 ```bash
 # ✅ Install required types
 npm install --save-dev @types/node @types/express
@@ -890,17 +939,18 @@ npm install --save-dev @types/node @types/express
 
 <div align="center">
 
-| Support Channel | Response Time | Best For |
-|:---------------:|:-------------:|:--------:|
-| 📧 **Email** | 24 hours | General questions |
-| 💬 **Telegram** | 2-4 hours | Quick help |
-| 🐛 **GitHub Issues** | 1-2 days | Bug reports |
-| 📺 **Video Call** | Same day | Complex integrations |
-| 📚 **Documentation** | Instant | Self-service |
+|   Support Channel    | Response Time |       Best For       |
+| :------------------: | :-----------: | :------------------: |
+|     📧 **Email**     |   24 hours    |  General questions   |
+|   💬 **Telegram**    |   2-4 hours   |      Quick help      |
+| 🐛 **GitHub Issues** |   1-2 days    |     Bug reports      |
+|  📺 **Video Call**   |   Same day    | Complex integrations |
+| 📚 **Documentation** |    Instant    |     Self-service     |
 
 </div>
 
 **Contact Information:**
+
 - 📧 **Email**: umirbayev72@gmail.com
 - 💬 **Telegram**: [@uzpay_support](https://t.me/uzpay_support)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Ilnur72/uz-pay-sdk/issues)
@@ -933,6 +983,7 @@ npm run start:dev
 npm run test
 npm run test:e2e
 ```
+
 </details>
 
 <details>
@@ -945,6 +996,7 @@ npm run test:e2e
 5. **🔄 Submit pull request** with clear description
 
 **Code Style:**
+
 - ESLint + Prettier for formatting
 - Conventional commits for messages
 - TypeScript strict mode
@@ -952,6 +1004,7 @@ npm run test:e2e
 </details>
 
 **Recognition for Contributors:**
+
 - 🏆 Listed in README credits
 - 🎁 UZ Pay swag & stickers
 - 💰 Revenue sharing for major contributors
@@ -960,6 +1013,7 @@ npm run test:e2e
 ## 📈 Roadmap & Future Plans
 
 ### **Q1 2024: Foundation**
+
 - ✅ Core SDK (5 providers)
 - ✅ React Native SDK
 - ✅ Documentation & tests
@@ -968,6 +1022,7 @@ npm run test:e2e
 - 🚧 Performance optimization
 
 ### **Q2 2024: Expansion**
+
 - 📱 Flutter SDK
 - 🏦 Additional providers (Paynet, Oson)
 - 🔍 Advanced analytics
@@ -975,6 +1030,7 @@ npm run test:e2e
 - 💳 International card support
 
 ### **Q3 2024: Scale**
+
 - 🤖 AI fraud detection
 - 📊 Merchant dashboard
 - 💼 B2B features
@@ -982,6 +1038,7 @@ npm run test:e2e
 - 🎯 Kyrgyzstan expansion
 
 ### **Q4 2024: Innovation**
+
 - ₿ Cryptocurrency support
 - 🔗 Blockchain integration
 - 🎪 Marketplace features
@@ -989,6 +1046,7 @@ npm run test:e2e
 - 🌐 Multi-region deployment
 
 **Long-term Vision (2025+):**
+
 - 🚀 IPO preparation
 - 🌏 International expansion
 - 🤝 Strategic partnerships
@@ -1001,14 +1059,15 @@ npm run test:e2e
 
 ### **Companies Using UZ Pay SDK** 🏢
 
-| Company | Industry | Monthly Volume | Success Story |
-|:-------:|:--------:|:--------------:|:-------------:|
-| **TechCorp** | E-commerce | $500K+ | *"Reduced integration time from 3 months to 2 days"* |
-| **FoodApp** | Food Delivery | $200K+ | *"99.9% payment success rate, customers love it"* |
-| **EduPlatform** | Education | $100K+ | *"Perfect for subscription payments"* |
-| **HealthTech** | Healthcare | $300K+ | *"HIPAA compliant, secure, reliable"* |
+|     Company     |   Industry    | Monthly Volume |                    Success Story                     |
+| :-------------: | :-----------: | :------------: | :--------------------------------------------------: |
+|  **TechCorp**   |  E-commerce   |     $500K+     | _"Reduced integration time from 3 months to 2 days"_ |
+|   **FoodApp**   | Food Delivery |     $200K+     |  _"99.9% payment success rate, customers love it"_   |
+| **EduPlatform** |   Education   |     $100K+     |        _"Perfect for subscription payments"_         |
+| **HealthTech**  |  Healthcare   |     $300K+     |        _"HIPAA compliant, secure, reliable"_         |
 
 **📈 Overall Impact:**
+
 - 💰 **$10M+** total processed
 - 🏢 **50+** companies integrated
 - 📱 **1M+** users served
@@ -1024,6 +1083,7 @@ npm run test:e2e
 <td width="30%">
 
 ### **🚀 Speed**
+
 - 30-second integration
 - Pre-built components
 - Copy-paste examples
@@ -1032,7 +1092,8 @@ npm run test:e2e
 </td>
 <td width="30%">
 
-### **💰 Cost-Effective**  
+### **💰 Cost-Effective**
+
 - 95% cost reduction
 - No per-provider fees
 - Transparent pricing
@@ -1042,6 +1103,7 @@ npm run test:e2e
 <td width="30%">
 
 ### **🛡️ Reliable**
+
 - 99.98% uptime
 - Battle-tested code
 - 24/7 monitoring
@@ -1055,13 +1117,46 @@ npm run test:e2e
 
 ---
 
-### **Ready to revolutionize payments in Uzbekistan?** 🇺🇿
+### **🚀 Join the revolution! Be among the first to use Uzbekistan's most advanced payment SDK**
 
 [![Get Started](https://img.shields.io/badge/Get%20Started-uz--pay--sdk-blue?style=for-the-badge&logo=npm)](https://npmjs.com/package/uz-pay-sdk)
-[![Documentation](https://img.shields.io/badge/Read%20Docs-uz--pay--docs.vercel.app-green?style=for-the-badge&logo=gitbook)](https://uz-pay-docs.vercel.app)
-[![Community](https://img.shields.io/badge/Join%20Community-Telegram-blue?style=for-the-badge&logo=telegram)](https://t.me/uzpaydev)
+[![Mobile SDK](https://img.shields.io/badge/Mobile%20SDK-React%20Native-61DAFB?style=for-the-badge&logo=react)](https://npmjs.com/package/@uz-pay/react-native-sdk)
+[![Documentation](https://img.shields.io/badge/Documentation-Complete-green?style=for-the-badge&logo=gitbook)](./COMPLETE-USAGE-GUIDE.md)
 
-**🔥 Star this repo if you found it helpful!**
+### **💬 Community & Support**
+
+<table>
+<tr>
+<td width="25%">
+
+**🐛 Issues & Bugs**
+[GitHub Issues](https://github.com/Ilnur72/uz-pay-sdk/issues)
+
+</td>
+<td width="25%">
+
+**💬 Discussion**
+[GitHub Discussions](https://github.com/Ilnur72/uz-pay-sdk/discussions)
+
+</td>
+<td width="25%">
+
+**📧 Email**
+umirbayev2004@gmail.com
+
+</td>
+<td width="25%">
+
+**⭐ Star us!**
+Help others discover this project
+
+</td>
+</tr>
+</table>
+
+### **🏆 Built by Uzbek developers for the Uzbek market**
+
+_Made with ❤️ in Uzbekistan_ 🇺🇿
 
 ---
 
@@ -1079,7 +1174,7 @@ This project is **MIT licensed** - see the [LICENSE](LICENSE) file for details.
 
 **Made with ❤️ in Uzbekistan 🇺🇿**
 
-*Empowering developers to build the future of payments*
+_Empowering developers to build the future of payments_
 
 [![GitHub](https://img.shields.io/badge/GitHub-Ilnur72-black?style=social&logo=github)](https://github.com/Ilnur72)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ilnur%20Umirbayev-blue?style=social&logo=linkedin)](https://linkedin.com/in/ilnur-umirbayev)
