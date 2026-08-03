@@ -1,7 +1,0 @@
-{
-  "name": "uz-pay-sdk-test",
-  "version": "1.0.0",
-  "scripts": {
-    "test:library": "npm run build:lib && cd example && npx ts-node demo.ts"
-  }
-}
